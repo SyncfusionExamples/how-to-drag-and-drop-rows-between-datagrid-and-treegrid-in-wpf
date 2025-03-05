@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace DragDropBetweenDataGridTreeGrid
         /// <summary>
         /// Denotes the employee first name
         /// </summary>
+        [Display(Name = "First Name")]
         public string FirstName
         {
             get { return _firstName; }
@@ -30,16 +32,19 @@ namespace DragDropBetweenDataGridTreeGrid
 
         /// <summary>
         /// Denotes the employee last name
-        /// </summary>
+        /// </summary>        
+        [Display(Name = "Last Name")]
         public string LastName
         {
             get { return _lastName; }
             set { _lastName = value; }
         }
 
+
         /// <summary>
         /// Denotes the employee id
         /// </summary>
+        [Display(Name = "ID")]
         public int ID
         {
             get { return _id; }
@@ -49,6 +54,7 @@ namespace DragDropBetweenDataGridTreeGrid
         /// <summary>
         /// Denotes the employee title
         /// </summary>
+        [Display(Name = "Title")]
         public string Title
         {
             get { return _title; }
@@ -58,6 +64,7 @@ namespace DragDropBetweenDataGridTreeGrid
         /// <summary>
         /// Denotes the employee salary
         /// </summary>
+        [Display(Name = "Salary")]
         public double? Salary
         {
             get { return _salary; }
@@ -67,6 +74,7 @@ namespace DragDropBetweenDataGridTreeGrid
         /// <summary>
         /// Denotes the employee who has reports to
         /// </summary>
+        [Display(Name = "Reports To")]
         public int ReportsTo
         {
             get { return _reportsTo; }

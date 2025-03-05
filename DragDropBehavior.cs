@@ -1,4 +1,5 @@
-﻿using Syncfusion.Data.Extensions;
+﻿using Microsoft.Xaml.Behaviors;
+using Syncfusion.Data.Extensions;
 using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.UI.Xaml.TreeGrid;
 using System;
@@ -8,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Interactivity;
 
 namespace DragDropBetweenDataGridTreeGrid
 {
@@ -21,7 +21,7 @@ namespace DragDropBetweenDataGridTreeGrid
             AssociatedObject.sfDataGrid.RowDragDropController.Drop += sfDataGrid_Drop;
             AssociatedObject.sfTreeGrid.RowDragDropController.Drop += sfTreeGrid_Drop;
         }
-       
+
         /// <summary>
         /// Customized TreeGrid Drop event.
         /// </summary>
@@ -31,17 +31,19 @@ namespace DragDropBetweenDataGridTreeGrid
         {
             if (e.IsFromOutSideSource)
             {
-                
+                //Getting the  dragging record from e.Data
                 var draggingRecord = e.Data.GetData("Records") as ObservableCollection<object>;
-                
+
                 var record = draggingRecord[0] as EmployeeInfo;
-                
+
+                //Getting the Drop position
                 var dropPosition = e.DropPosition.ToString();
-               
+
                 var newItem = new EmployeeInfo();
 
-                var rowIndex =AssociatedObject.sfTreeGrid.ResolveToRowIndex(e.TargetNode.Item);
-                
+                //Getting the Target node index
+                var rowIndex = AssociatedObject.sfTreeGrid.ResolveToRowIndex(e.TargetNode.Item);
+
                 if (dropPosition != "None" && rowIndex != -1)
                 {
                     if (AssociatedObject.sfTreeGrid.View is TreeGridSelfRelationalView)
@@ -49,57 +51,36 @@ namespace DragDropBetweenDataGridTreeGrid
                         var treeNode = e.TargetNode;
                         if (treeNode == null)
                             return;
-                       
-                        var data = treeNode.Item;
 
-                        AssociatedObject.sfTreeGrid.SelectionController.SuspendUpdates();
-                        
+                        var targetData = treeNode.Item;
+
                         var dropIndex = -1;
 
                         TreeNode parentNode = null;
 
+                        IList sourceCollection = null;
+
                         if (dropPosition == "DropBelow" || dropPosition == "DropAbove")
                         {
+                            //Create the new item based on ParentNode and Its ChildPropertyName then get its source collection
                             parentNode = treeNode.ParentNode;
                             if (parentNode == null)
                             {
                                 var treeNodeItem = treeNode.Item as EmployeeInfo;
                                 newItem = new EmployeeInfo() { FirstName = record.FirstName, LastName = record.LastName, ID = record.ID, Salary = record.Salary, Title = record.Title, ReportsTo = treeNodeItem.ReportsTo };
+                                sourceCollection = GetSourceListCollection(AssociatedObject.sfTreeGrid.View.SourceCollection);
                             }
                             else
                             {
                                 var parentNodeItems = parentNode.Item as EmployeeInfo;
                                 newItem = new EmployeeInfo() { FirstName = record.FirstName, LastName = record.LastName, ID = record.ID, Salary = record.Salary, Title = record.Title, ReportsTo = parentNodeItems.ID };
-                            }
-                        }
-
-                        else if (dropPosition == "DropAsChild")
-                        {
-
-                            if (!treeNode.IsExpanded)
-                                AssociatedObject.sfTreeGrid.ExpandNode(treeNode);
-                            parentNode = treeNode;
-                            var parentNodeItems = parentNode.Item as EmployeeInfo;
-                            newItem = new EmployeeInfo() { FirstName = record.FirstName, LastName = record.LastName, ID = record.ID, Salary = record.Salary, Title = record.Title, ReportsTo = parentNodeItems.ID };
-
-                        }
-
-                        IList sourceCollection = null;
-                        
-
-                        if (dropPosition == "DropBelow" || dropPosition == "DropAbove")
-                        {
-
-                            if (treeNode.ParentNode != null)
-                            {
                                 var collection = AssociatedObject.sfTreeGrid.View.GetPropertyAccessProvider().GetValue(treeNode.ParentNode.Item, AssociatedObject.sfTreeGrid.ChildPropertyName) as IEnumerable;
                                 sourceCollection = GetSourceListCollection(collection);
                             }
-                            else
-                            {
-                                sourceCollection = GetSourceListCollection(AssociatedObject.sfTreeGrid.View.SourceCollection);
-                            }
-                            dropIndex = sourceCollection.IndexOf(data);
+
+                            //Get the drop index based on DropPosition
+
+                            dropIndex = sourceCollection.IndexOf(targetData);
 
                             if (dropPosition == "DropBelow")
                             {
@@ -109,13 +90,22 @@ namespace DragDropBetweenDataGridTreeGrid
 
                         else if (dropPosition == "DropAsChild")
                         {
-                            var collection = AssociatedObject.sfTreeGrid.View.GetPropertyAccessProvider().GetValue(data, AssociatedObject.sfTreeGrid.ChildPropertyName) as IEnumerable;
+                            //Expand the parent node if it is not expanded
+                            if (!treeNode.IsExpanded)
+                                AssociatedObject.sfTreeGrid.ExpandNode(treeNode);
+
+                            //Create the new item based on ParentNode and Its ChildPropertyName then get its source collection
+                            parentNode = treeNode;
+                            var parentNodeItems = parentNode.Item as EmployeeInfo;
+                            newItem = new EmployeeInfo() { FirstName = record.FirstName, LastName = record.LastName, ID = record.ID, Salary = record.Salary, Title = record.Title, ReportsTo = parentNodeItems.ID };
+
+                            var collection = AssociatedObject.sfTreeGrid.View.GetPropertyAccessProvider().GetValue(targetData, AssociatedObject.sfTreeGrid.ChildPropertyName) as IEnumerable;
 
                             sourceCollection = GetSourceListCollection(collection);
 
                             if (sourceCollection == null)
                             {
-                                var list = data.GetType().GetProperty(AssociatedObject.sfTreeGrid.ChildPropertyName).PropertyType.CreateNew() as IList;
+                                var list = targetData.GetType().GetProperty(AssociatedObject.sfTreeGrid.ChildPropertyName).PropertyType.CreateNew() as IList;
 
                                 if (list != null)
                                 {
@@ -125,13 +115,15 @@ namespace DragDropBetweenDataGridTreeGrid
                             }
                             dropIndex = sourceCollection.Count;
                         }
+
+                        //Insert the new item to the source collection based on DropIndex
                         sourceCollection.Insert(dropIndex, newItem);
 
-                        AssociatedObject.sfTreeGrid.SelectionController.ResumeUpdates();
-                        (AssociatedObject.sfTreeGrid.SelectionController as TreeGridRowSelectionController).RefreshSelection();
                         e.Handled = true;
                     }
                 }
+
+                //Remove the record from the source collection
                 AssociatedObject.sfDataGrid.View.Remove(record);
             }
         }
@@ -165,25 +157,31 @@ namespace DragDropBetweenDataGridTreeGrid
             
             if (e.IsFromOutSideSource)
             {
+                //Getting the  dragging record from e.Data
                 var draggingRecord = e.Data.GetData("Nodes") as ObservableCollection<TreeNode>;
                 
                 var record = draggingRecord[0].Item as EmployeeInfo;
 
+                //Getting the Drop Index
                 int dropIndex = (int)e.TargetRecord;
 
-              
+              //Getting the Drop position
                 var dropPosition = e.DropPosition.ToString();
 
+                //Restrict the certain record from drop
                 if (record.Title == "Manager")
                 {
                     e.Handled = true;
                     return;
                 }
-                
-                
+
+
+                //Get the Source Collection
                 IList collection = null;
 
                 collection = AssociatedObject.sfDataGrid.View.SourceCollection as IList;
+
+                //Insert the new item to the source collection based on DropIndex
                 if (dropPosition == "DropAbove")
                 {
                     dropIndex--;
@@ -196,6 +194,8 @@ namespace DragDropBetweenDataGridTreeGrid
                     collection.Insert(dropIndex, record);
                    
                 }
+
+                //Remove the record from the source collection
                 AssociatedObject.sfTreeGrid.View.Remove(record);
                 e.Handled = true;
             }

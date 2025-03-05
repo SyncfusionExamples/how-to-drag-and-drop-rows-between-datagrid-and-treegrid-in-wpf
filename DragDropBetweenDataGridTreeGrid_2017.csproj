@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DragDropBetweenDataGridTreeGrid</RootNamespace>
     <AssemblyName>DragDropBetweenDataGridTreeGrid</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,18 +36,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" version="1.1.135" />
+    <PackageReference Include="Syncfusion.Data.WPF" version="28.2.7" />
+    <PackageReference Include="Syncfusion.Licensing" version="28.2.7" />
+    <PackageReference Include="Syncfusion.SfGrid.WPF" version="28.2.7" />
+    <PackageReference Include="Syncfusion.Shared.WPF" version="28.2.7" />
     <Reference Include="ReachFramework" />
-    <Reference Include="Syncfusion.Data.WPF">
-    </Reference>
-    <Reference Include="Syncfusion.SfGrid.WPF">
-    </Reference>
-    <Reference Include="Syncfusion.Shared.WPF">
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />

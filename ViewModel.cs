@@ -89,14 +89,14 @@ namespace DragDropBetweenDataGridTreeGrid
         private ObservableCollection<EmployeeInfo> GetEmployeeDetailsForDataGrid()
         {
             ObservableCollection<EmployeeInfo> datagridEmployee = new ObservableCollection<EmployeeInfo>();
-            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Susmi", LastName = "Joseph", ID = 800, Title = "Management", Salary = 2000000, ReportsTo = 1,  });
-            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Ramya", LastName = "Fuller", ID = 100, Salary = 1200000, ReportsTo = 2, Title = "Vice President" });
-            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Priya", LastName = "Leverling", ID = 200, Salary = 1000000, ReportsTo = 2, Title = "GM" });
-            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Vicky", LastName = "Buchanan", ID = 300, Salary = 900000, ReportsTo = 8, Title = "Manager" });
-            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Nancy", LastName = "Davolio", ID = 400, Salary = 850000, ReportsTo = 4, Title = "Accounts Manager" });
-            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Margaret", LastName = "Peacock", ID = 500, Salary = 700000, ReportsTo = 3, Title = "Accountant" });
-            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Michael", LastName = "Suyama", ID = 600, Salary = 700000, ReportsTo = 3, Title = "Accountant" });
-            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Robert", LastName = "King", ID = 700, Salary = 650000, ReportsTo = 7, Title = "Accountant" });
+            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Maria", LastName = "Anders", ID = 800, Title = "Management", Salary = 2000000, ReportsTo = 1, });
+            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Ana", LastName = "Trujilo", ID = 100, Salary = 1200000, ReportsTo = 2, Title = "Vice President" });
+            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Antonio", LastName = "Moreno", ID = 200, Salary = 1000000, ReportsTo = 2, Title = "GM" });
+            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Thomas", LastName = "Hardy", ID = 300, Salary = 900000, ReportsTo = 8, Title = "Manager" });
+            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Christina", LastName = "Berglund", ID = 400, Salary = 850000, ReportsTo = 4, Title = "Accounts Manager" });
+            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Hanna", LastName = "Moos", ID = 500, Salary = 700000, ReportsTo = 3, Title = "Accountant" });
+            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Frederique", LastName = "Citeaux", ID = 600, Salary = 700000, ReportsTo = 3, Title = "Accountant" });
+            datagridEmployee.Add(new EmployeeInfo() { FirstName = "Laurence", LastName = "Lebihan", ID = 700, Salary = 650000, ReportsTo = 7, Title = "Accountant" });
             return datagridEmployee;
         }
         #endregion
