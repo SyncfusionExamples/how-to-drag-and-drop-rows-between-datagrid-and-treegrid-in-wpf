@@ -1,8 +1,8 @@
-# How to drag and drop rows between datagrid and treegrid in wpf
+# How to Drag and Drop Rows Between WPF DataGrid and WPF TreeGrid?
 
-This example illustrates how to drag and drop rows between [WPF DataGrid](https://www.syncfusion.com/wpf-controls/datagrid) and [WPF TreeGrid](https://www.syncfusion.com/wpf-controls/treegrid).
+This example illustrates how to drag and drop rows between [WPF DataGrid](https://www.syncfusion.com/wpf-controls/datagrid) (SfDataGrid) and [WPF TreeGrid](https://www.syncfusion.com/wpf-controls/treegrid) (SfTreeGrid).
 
-To perform the dragging operation between `SfDataGrid` and `SfTreeGrid` by using the [GridRowDragDropController.Drop](https://help.syncfusion.com/cr/wpf/Syncfusion.UI.Xaml.Grid.GridRowDragDropController.html#Syncfusion_UI_Xaml_Grid_GridRowDragDropController_Drop) and [TreeGridRowDragDropController.Drop](https://help.syncfusion.com/cr/wpf/Syncfusion.UI.Xaml.TreeGrid.TreeGridRowDragDropController.html#Syncfusion_UI_Xaml_TreeGrid_TreeGridRowDragDropController_Drop) events.
+To perform the dragging operation between DataGrid and TreeGrid by using the [GridRowDragDropController.Drop](https://help.syncfusion.com/cr/wpf/Syncfusion.UI.Xaml.Grid.GridRowDragDropController.html#Syncfusion_UI_Xaml_Grid_GridRowDragDropController_Drop) and [TreeGridRowDragDropController.Drop](https://help.syncfusion.com/cr/wpf/Syncfusion.UI.Xaml.TreeGrid.TreeGridRowDragDropController.html#Syncfusion_UI_Xaml_TreeGrid_TreeGridRowDragDropController_Drop) events.
 
 ``` c#
 this.sfDataGrid.RowDragDropController.Drop += sfDataGrid_Drop;
@@ -150,3 +150,5 @@ private void sfDataGrid_Drop(object sender, GridRowDropEventArgs e)
     }
 }
 ```
+
+![Drag and drop between DataGrid and TreeGrid](DragDropDataGridToTreeGrid.png)
